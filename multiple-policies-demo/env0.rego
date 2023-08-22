@@ -1,5 +1,8 @@
 package env0
 
+cost_threshold := 5
+required_approvers := 2
+
 has_key(x, k) {
 	_ = x[k]
 }
@@ -9,8 +12,8 @@ has_key(x, k) {
 # description: require approval if cost diffrence is larger then our given threshold and less then 2 approvals given.
 pending[format(rego.metadata.rule())] {
 	has_key(input.costEstimation, "projectDiffTotalMonthlyCost")
-	input.costEstimation.projectDiffTotalMonthlyCost > 5
-	count(input.approvers) < 2
+	input.costEstimation.projectDiffTotalMonthlyCost > cost_threshold
+	count(input.approvers) < required_approvers
 }
 
 # METADATA
@@ -25,8 +28,8 @@ allow[format(rego.metadata.rule())] {
 # description: allow if two or more approvals are given and the cost diffrence is greater then our threshold.
 allow[format(rego.metadata.rule())] {
 	has_key(input.costEstimation, "projectDiffTotalMonthlyCost")
-	input.costEstimation.projectDiffTotalMonthlyCost > 5
-	count(input.approvers) >= 2
+	input.costEstimation.projectDiffTotalMonthlyCost > cost_threshold
+	count(input.approvers) >= required_approvers
 }
 
 # METADATA
@@ -34,7 +37,7 @@ allow[format(rego.metadata.rule())] {
 # description: allow if cost diffrence is smaller then threshold.
 allow[format(rego.metadata.rule())] {
 	has_key(input.costEstimation, "projectDiffTotalMonthlyCost")
-	input.costEstimation.projectDiffTotalMonthlyCost <= 5
+	input.costEstimation.projectDiffTotalMonthlyCost <= cost_threshold
 }
 
 format(meta) := meta.description
