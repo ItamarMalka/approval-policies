@@ -1,6 +1,6 @@
 package env0
 
-cost_threshold := 5
+cost_threshold := 100
 required_approvers := 2
 
 has_key(x, k) {
