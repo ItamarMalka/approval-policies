@@ -11,6 +11,8 @@ has_key(x, k) {
 # title: require multiple approvals when cost diffrence is large
 # description: require approval if cost diffrence is larger then our given threshold and less then 2 approvals given.
 pending[format(rego.metadata.rule())] {
+	cost_e := input.costEstimation
+	print("pending", cost_e)
 	has_key(input.costEstimation, "projectDiffTotalMonthlyCost")
 	input.costEstimation.projectDiffTotalMonthlyCost > cost_threshold
 	count(input.approvers) < required_approvers
