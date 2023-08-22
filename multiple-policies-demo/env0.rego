@@ -24,7 +24,7 @@ pending[format(rego.metadata.rule())] {
 # description: allow if two or more approvals are given.
 allow[format(rego.metadata.rule())] {
 	count(input.approvers) >= 2
-	not has_key(input.costEstimation, "totalMonthlyCost")
+	not has_key(input.costEstimation, "projectDiffTotalMonthlyCost")
 }
 
 # METADATA
@@ -32,8 +32,8 @@ allow[format(rego.metadata.rule())] {
 # description: allow if two or more approvals are given.
 allow[format(rego.metadata.rule())] {
 	count(input.approvers) >= 2
-	has_key(input.costEstimation, "totalMonthlyCost")
-	input.costEstimation.totalMonthlyCost > 100
+	has_key(input.costEstimation, "projectDiffTotalMonthlyCost")
+	input.costEstimation.projectDiffTotalMonthlyCost > 5
 }
 
 format(meta) := meta.description
