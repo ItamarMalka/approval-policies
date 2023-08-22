@@ -1,6 +1,7 @@
 package env0
 
 cost_threshold := 100
+resource_limit := 5
 required_approvers := 2
 
 has_key(x, k) {
@@ -20,8 +21,6 @@ pending[format(rego.metadata.rule())] {
 # title: multiple approvals given for cost diffrence greater then threshold.
 # description: allow if two or more approvals are given and the cost diffrence is greater then our threshold.
 allow[format(rego.metadata.rule())] {
-	has_key(input.costEstimation, "monthlyCostDiff")
-	input.costEstimation.monthlyCostDiff > cost_threshold
 	count(input.approvers) >= required_approvers
 }
 
