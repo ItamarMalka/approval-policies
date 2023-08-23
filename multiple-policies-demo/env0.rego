@@ -1,7 +1,6 @@
 package env0
 
 cost_threshold := 100
-resource_limit := 5
 required_approvers := 2
 
 has_key(x, k) {
@@ -14,6 +13,14 @@ has_key(x, k) {
 pending[format(rego.metadata.rule())] {
 	has_key(input.costEstimation, "monthlyCostDiff")
 	input.costEstimation.monthlyCostDiff > cost_threshold
+	count(input.approvers) < required_approvers
+}
+
+# METADATA
+# title: requires multiple approvals for more than planned resources limit
+# description: require multiple approvals on more than planned resources limit
+pending[format(rego.metadata.rule())] {
+	count(input.plan.resource_changes) >= resource_limit
 	count(input.approvers) < required_approvers
 }
 
