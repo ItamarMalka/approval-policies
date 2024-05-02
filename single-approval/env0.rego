@@ -3,7 +3,7 @@ package env0
 # METADATA
 # title: Require Approval
 # description: require 1 approval
-pending[format(rego.metadata.rule())] {
+deny[format(rego.metadata.rule())] {
 	count(input.approvers) < 1
 }
 
